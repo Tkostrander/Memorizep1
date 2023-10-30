@@ -10,16 +10,22 @@ import SwiftUI
 
 struct ContentView: View {
     
-    @State var emojis = ["👻","🎃","💀","👺","🕸️","🐮","🐷","🐻", "👻","🎃","💀","👺","🕸️","🐮","🐷","🐻"]
+    @State var emojis: Array<String> = []
+
     
-    var transportation = [""]
+    var halloween = ["👻","🎃","💀","👺","🕸️","🐮","🐷", "👻","🎃","💀","👺","🕸️","🐮","🐷"]
     
-    var food = [""]
+    var transportation = ["🚕","🚔","🚍","🚚"," 🚒","🚜","🛵","🛻","🚕","🚔","🚍","🚚"," 🚒","🚜","🛵","🛻"]
     
-    @State var cardCount = 16
+    var food = ["🍔","🌮","🍕","🍗","🥓","🍰","🧁","🍓","🍔","🌮","🍕","🍗","🥓","🍰","🧁","🍓","🌯","🍱","🌯","🍱"]
+    
+    @State var cardCount = 0
     
     var body: some View {
         VStack {
+            Text("Memorize!")
+                .font(.largeTitle)
+                .fontWeight(.bold)
             ScrollView {
                 LazyVGrid(columns: [GridItem(.adaptive(minimum: 80))]) {
                     ForEach(0..<cardCount, id: \.self) { index in
@@ -34,35 +40,39 @@ struct ContentView: View {
                     Image(systemName: "moonphase.full.moon")
                         .font(.largeTitle)
                     Button("Halloween") {
-                        
+                        emojis = halloween.shuffled()
+                        cardCount = emojis.count
                     }
                 }
                 VStack {
                     Image(systemName: "moonphase.full.moon")
                         .font(.largeTitle)
                     Button("Transportation") {
-                        
+                        emojis = transportation.shuffled()
+                        cardCount = transportation.count
                     }
                 }
                 VStack {
                     Image(systemName: "moonphase.first.quarter")
                         .font(.largeTitle)
                     Button("Food") {
-                        
+                        emojis = food.shuffled()
+                        cardCount = food.count
                     }
                 }
-                
             }
             .padding()
         }
         .padding()
     }
     
+    
+    
 }
 
 struct CardView: View {
     
-    @State var isFaceUp = true
+    @State var isFaceUp = false
     let content: String
     
     var body: some View {
