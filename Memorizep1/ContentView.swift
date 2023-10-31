@@ -11,7 +11,6 @@ import SwiftUI
 struct ContentView: View {
     
     @State var emojis: Array<String> = []
-
     
     var halloween = ["👻","🎃","💀","👺","🕸️","🐮","🐷", "👻","🎃","💀","👺","🕸️","🐮","🐷"]
     
@@ -35,31 +34,10 @@ struct ContentView: View {
                 }
                 .foregroundColor(.orange)
             }
-            HStack {
-                VStack {
-                    Image(systemName: "moonphase.full.moon")
-                        .font(.largeTitle)
-                    Button("Halloween") {
-                        emojis = halloween.shuffled()
-                        cardCount = emojis.count
-                    }
-                }
-                VStack {
-                    Image(systemName: "moonphase.full.moon")
-                        .font(.largeTitle)
-                    Button("Transportation") {
-                        emojis = transportation.shuffled()
-                        cardCount = transportation.count
-                    }
-                }
-                VStack {
-                    Image(systemName: "moonphase.first.quarter")
-                        .font(.largeTitle)
-                    Button("Food") {
-                        emojis = food.shuffled()
-                        cardCount = food.count
-                    }
-                }
+            HStack(spacing:40) {
+               themeButton(themeName: "halloween", theme: halloween, symbol: "moonphase.full.moon")
+               themeButton(themeName: "transportation", theme: transportation, symbol: "moonphase.first.quarter")
+               themeButton(themeName: "food", theme: food, symbol: "cloud.snow")
             }
             .padding()
         }
@@ -67,56 +45,65 @@ struct ContentView: View {
     }
     
     
-    
-}
-
-struct CardView: View {
-    
-    @State var isFaceUp = false
-    let content: String
-    
-    var body: some View {
-        ZStack {
-            let base = RoundedRectangle(cornerRadius: 12)
-            Group {
-                base.fill(.white)
-                base.strokeBorder(lineWidth: 2)
-                Text(content).font(.largeTitle)
+    func themeButton(themeName: String, theme: Array<String>, symbol: String) -> some View {
+        VStack {
+            Image(systemName: symbol)
+                .font(.largeTitle)
+            Button(themeName) {
+                emojis = theme.shuffled()
+                cardCount = theme.count
             }
-            .opacity(isFaceUp ? 1 : 0)
-            base.fill().opacity(isFaceUp ? 0 : 1)
-            
         }
-        .onTapGesture {
-            isFaceUp.toggle()
+    }
+    
+    struct CardView: View {
+        
+        @State var isFaceUp = false
+        let content: String
+        
+        var body: some View {
+            ZStack {
+                let base = RoundedRectangle(cornerRadius: 12)
+                Group {
+                    base.fill(.white)
+                    base.strokeBorder(lineWidth: 2)
+                    Text(content).font(.largeTitle)
+                }
+                .opacity(isFaceUp ? 1 : 0)
+                base.fill().opacity(isFaceUp ? 0 : 1)
+                
+            }
+            .onTapGesture {
+                isFaceUp.toggle()
+            }
         }
     }
 }
-                    
-                    
     
     
- 
     
     
-
-
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
 #Preview {
     ContentView()
 }
+
+
